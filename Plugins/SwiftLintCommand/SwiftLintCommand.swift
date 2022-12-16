@@ -8,13 +8,16 @@ struct SwiftLintCommand: CommandPlugin {
         let tool = try context.tool(named: "swiftlint")
         let toolURL = URL(fileURLWithPath: tool.path.string)
 
-        for target in context.package.targets {
+        let (arguments, excludedTargets) = arguments.extractExcludedTargets()
+        let targets = context.package.targets.filter { !excludedTargets.contains($0.name) }
+
+        for target in targets {
             guard let target = target as? SourceModuleTarget else { continue }
 
             let swiftFilePaths = target.sourceFiles(withSuffix: "swift").map(\.path)
             if swiftFilePaths.isEmpty { continue }
 
-            let arguments = [
+            let arguments = arguments + [
                 "\(target.directory)",
                 "--cache-path",
                 "\(context.pluginWorkDirectory)"
@@ -32,5 +35,21 @@ struct SwiftLintCommand: CommandPlugin {
                 return
             }
         }
+    }
+}
+
+private extension [String] {
+    func extractExcludedTargets() -> ([String], [String]) {
+        guard let index = firstIndex(where: { $0 == "--exclude-targets" }) else {
+            return (self, [])
+        }
+        let indexAfter = index.advanced(by: 1)
+        let excludedTargets = self[indexAfter]
+            .split(separator: ",")
+            .map { String($0).trimmingCharacters(in: .whitespaces) }
+        let filteredElements = enumerated()
+            .filter { ![index, indexAfter].contains($0.offset) }
+            .map(\.element)
+        return (filteredElements, excludedTargets)
     }
 }
