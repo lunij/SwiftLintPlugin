@@ -11,7 +11,7 @@ struct SwiftLint: BuildToolPlugin {
                 arguments: [
                     "lint",
                     "--cache-path",
-                    "\(context.pluginWorkDirectory.string)/cache",
+                    context.pluginWorkDirectory.string,
                     target.directory.string
                 ],
                 environment: [:]
@@ -32,7 +32,7 @@ extension SwiftLint: XcodeBuildToolPlugin {
                 arguments: [
                     "lint",
                     "--cache-path",
-                    "\(context.pluginWorkDirectory.string)/cache",
+                    "\(context.pluginWorkDirectory.string)",
                     context.xcodeProject.directory.string
                 ],
                 environment: [:]

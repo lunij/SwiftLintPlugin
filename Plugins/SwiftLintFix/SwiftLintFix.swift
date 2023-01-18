@@ -18,9 +18,7 @@ struct SwiftLintFix: CommandPlugin {
                 "\(target.directory)",
                 "--fix",
                 "--cache-path",
-                "\(context.pluginWorkDirectory)",
-                "--config",
-                "\(context.package.directory.string)/.swiftlint.yml"
+                context.pluginWorkDirectory.string
             ]
 
             let process = Process()
