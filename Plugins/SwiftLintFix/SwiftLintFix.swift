@@ -15,12 +15,10 @@ struct SwiftLintFix: CommandPlugin {
             if swiftFilePaths.isEmpty { continue }
 
             let arguments = [
-                "\(target.directory)",
+                target.directory.string,
                 "--fix",
                 "--cache-path",
-                "\(context.pluginWorkDirectory)",
-                "--config",
-                "\(context.package.directory.string)/.swiftlint.yml"
+                context.pluginWorkDirectory.string
             ]
 
             let process = Process()

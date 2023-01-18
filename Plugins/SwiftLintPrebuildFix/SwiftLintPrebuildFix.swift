@@ -10,10 +10,8 @@ struct SwiftLintPrebuildFix: BuildToolPlugin {
                 executable: try context.tool(named: "swiftlint").path,
                 arguments: [
                     "--fix",
-                    "--config",
-                    "\(context.package.directory.string)/.swiftlint.yml",
                     "--cache-path",
-                    "\(context.pluginWorkDirectory.string)/cache",
+                    context.pluginWorkDirectory.string,
                     target.directory.string
                 ],
                 outputFilesDirectory: context.pluginWorkDirectory
@@ -33,10 +31,8 @@ extension SwiftLintPrebuildFix: XcodeBuildToolPlugin {
                 executable: try context.tool(named: "swiftlint").path,
                 arguments: [
                     "--fix",
-                    "--config",
-                    "\(context.xcodeProject.directory.string)/.swiftlint.yml",
                     "--cache-path",
-                    "\(context.pluginWorkDirectory.string)/cache",
+                    context.pluginWorkDirectory.string,
                     context.xcodeProject.directory.string
                 ],
                 outputFilesDirectory: context.pluginWorkDirectory

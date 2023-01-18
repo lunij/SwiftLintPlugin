@@ -18,9 +18,9 @@ struct SwiftLintCommand: CommandPlugin {
             if swiftFilePaths.isEmpty { continue }
 
             let arguments = arguments + [
-                "\(target.directory)",
+                target.directory.string,
                 "--cache-path",
-                "\(context.pluginWorkDirectory)"
+                context.pluginWorkDirectory.string
             ]
 
             let process = Process()
