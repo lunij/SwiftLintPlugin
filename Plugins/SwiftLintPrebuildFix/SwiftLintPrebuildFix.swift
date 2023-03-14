@@ -4,7 +4,7 @@ import PackagePlugin
 @main
 struct SwiftLintPrebuildFix: BuildToolPlugin {
     func createBuildCommands(context: PluginContext, target: Target) async throws -> [Command] {
-        return [
+        [
             .prebuildCommand(
                 displayName: "Running `swiftlint --fix` for \(target.name)",
                 executable: try context.tool(named: "swiftlint").path,
@@ -25,7 +25,7 @@ import XcodeProjectPlugin
 
 extension SwiftLintPrebuildFix: XcodeBuildToolPlugin {
     func createBuildCommands(context: XcodePluginContext, target: XcodeTarget) throws -> [Command] {
-        return [
+        [
             .prebuildCommand(
                 displayName: "Running `swiftlint --fix` for \(target.displayName)",
                 executable: try context.tool(named: "swiftlint").path,
