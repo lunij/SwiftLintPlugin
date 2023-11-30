@@ -13,7 +13,6 @@ let package = Package(
     products: [
         .plugin(name: "SwiftLint", targets: ["SwiftLint"]),
         .plugin(name: "SwiftLintPrebuildFix", targets: ["SwiftLintPrebuildFix"]),
-        .plugin(name: "SwiftLintFix", targets: ["SwiftLintFix"]),
         .plugin(name: "SwiftLintCommand", targets: ["SwiftLintCommand"])
     ],
     targets: [
@@ -30,16 +29,6 @@ let package = Package(
         .plugin(
             name: "SwiftLintPrebuildFix",
             capability: .buildTool(),
-            dependencies: ["SwiftLintBinary"]
-        ),
-        .plugin(
-            name: "SwiftLintFix",
-            capability: .command(
-                intent: .sourceCodeFormatting(),
-                permissions: [
-                    .writeToPackageDirectory(reason: "SwiftLint tries to clean up lints")
-                ]
-            ),
             dependencies: ["SwiftLintBinary"]
         ),
         .plugin(
